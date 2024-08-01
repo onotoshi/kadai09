@@ -30,6 +30,11 @@ if ($status === false) {
         if (!empty($result['image_path'])) {
             $view .= '<div class="post-image"><img src="'.h($result['image_path']).'" alt="投稿画像"></div>';
         }
+        // 更新と削除のリンクを追加
+        $view .= '<div class="post-actions">';
+        $view .= '<a href="update.php?id='.$result['id'].'">Update</a> | ';
+        $view .= '<a href="delete.php?id='.$result['id'].'" onclick="return confirm(\'Are you sure you want to delete this post?\')">Delete</a>';
+        $view .= '</div>';
         $view .= '</div>';
     }
 }
@@ -97,6 +102,15 @@ if ($status === false) {
         height: auto;
         border-radius: 8px;
         margin-top: 1em;
+    }
+    .post-actions {
+        margin-top: 1em;
+        text-align: right;
+    }
+    .post-actions a {
+        color: #4caf50;
+        text-decoration: none;
+        margin: 0 5px;
     }
 </style>
 </head>
