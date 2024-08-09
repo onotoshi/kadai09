@@ -1,23 +1,45 @@
 <?php
+// 必要なファイルをインクルード
+include 'funcs.php';
 
-session_start();
-require_once 'funcs.php';
-loginCheck();
+// データベース接続
+データベース名	使用量	
+$dbname = 'php_php04kadai';
+$host = 'localhost';
+$dbname = 'php_kadai04';
+$username = 'root';
+$password = '';
 
-//1. POSTつぶやき取得
-$id = $_GET['id'];
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-//2. DB接続します
-$pdo = db_conn();
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        // GETリクエストからIDを取得
+        $id = $_GET['id'];
 
-//３．つぶやき登録SQL作成
-$stmt = $pdo->prepare('DELETE FROM contents WHERE id = :id;');
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
-$status = $stmt->execute(); //実行
+        // 削除クエリを準備
+        $stmt = $pdo->prepare("DELETE FROM php_kadai04 WHERE id = ?");
+        $stmt->execute([$id]);
 
-//４．つぶやき登録処理後
-if ($status === false) {
-    sql_error($stmt);
-} else {
-    redirect('select.php');
+        echo "Delete successful!";
+    }
+} catch (PDOException $e) {
+    die("DBConnectError: " . $e->getMessage());
 }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Post</title>
+</head>
+<body>
+<h2>Delete Post</h2>
+<form action="delete.php" method="get">
+    <label for="id">Post ID:</label>
+    <input type="text" id="id" name="id" required><br><br>
+    <input type="submit" value="Delete">
+</form>
+</body>
+</html>

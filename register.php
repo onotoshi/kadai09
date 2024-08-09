@@ -25,14 +25,22 @@
 //3. DB接続情報を環境に応じて切り替えます
 if ($_SERVER['HTTP_HOST'] === 'localhost') {
     // ローカル環境
+    $dbname = 'php04kadai';
     $host = 'localhost';
     $dbname = 'php_kadai04';
     $username = 'root';
     $password = '';
 } else {
     // サーバー環境（さくらインターネット）
+    // ここ、サーバー情報追加！
+    $host = 'mysql618.db.sakura.ne.jp';
+
     $host = 'mysql57.onotoshi.sakura.ne.jp'; // さくらインターネットから提供されたホスト名
-    $dbname = 'onotoshi_php_kadai04'; // データベース名
+
+    // ↓コメントアウトして昨日の情報に変更！php04kadaiにすべて変更ローカルでは動くがさくらでは動作できない！
+    $dbname = 'onotoshi_php_Php04kadai';
+
+    // $dbname = 'onotoshi_php_kadai04'; // データベース名
     $username = 'onotoshi'; // データベースユーザー名
     $password = 'to20131117'; // データベースパスワード
 }

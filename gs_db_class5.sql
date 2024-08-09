@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- ホスト: localhost
--- 生成日時: 2024 年 7 月 13 日 13:59
--- サーバのバージョン： 10.4.27-MariaDB
--- PHP のバージョン: 8.1.12
+-- ホスト: 127.0.0.1
+-- 生成日時: 2024-08-09 17:51:51
+-- サーバのバージョン： 10.4.32-MariaDB
+-- PHP のバージョン: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
