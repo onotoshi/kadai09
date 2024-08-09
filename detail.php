@@ -2,6 +2,21 @@
 session_start();
 require_once 'funcs.php';
 loginCheck();
+
+$id = $_GET['id']; //?id~**を受け取る
+$pdo = db_conn();
+
+//２．つぶやき登録SQL作成
+$stmt = $pdo->prepare('SELECT * FROM contents WHERE id=:id;');
+$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$status = $stmt->execute();
+
+//３．つぶやき表示
+if (!$status) {
+    sql_error($stmt);
+} else {
+    $row = $stmt->fetch();
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,12 +24,13 @@ loginCheck();
 
 <head>
     <meta charset="UTF-8">
-    <title>つぶやき登録</title>
+    <title>つぶやき更新</title>
     <link rel="stylesheet" href="css/common.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/detail.css" />
 </head>
 
 <body>
+
     <!-- Head[Start] -->
     <header>
         <nav class="navbar navbar-default">
@@ -26,21 +42,20 @@ loginCheck();
         </nav>
     </header>
     <!-- Head[End] -->
-    <!-- Main[Start] -->
-    <form method="POST" action="insert.php" enctype="multipart/form-data">
+    <form method="POST" action="update.php" enctype="multipart/form-data">
         <div class="jumbotron">
             <fieldset>
-                <legend>フリーアンケート</legend>
+                <legend>[編集]</legend>
                 <div>
                     <label for="content">内容：</label>
-                    <textarea id="content" name="content" rows="4" cols="40"></textarea>
+                    <textarea id="content" name="content" rows="4" cols="40"><?= h($row['content']) ?></textarea>
                 </div>
                 <div>
-                    <input type="submit" value="送信">
+                    <input type="submit" value="更新">
+                    <input type="hidden" name="id" value="<?= $id ?>">
                 </div>
             </fieldset>
         </div>
     </form>
 </body>
-
 </html>
